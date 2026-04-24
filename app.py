@@ -9,6 +9,10 @@ app = Flask(__name__)
 
 MONGO_URI = os.getenv("MONGO_URI")
 
+client = MongoClient(MONGO_URI)
+db = client["assignment_db"]
+todo_collection = db["todo_items"]
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -44,10 +48,6 @@ def submit():
 @app.route("/success")
 def success():
     return render_template("success.html")
-
-@app.route("/todo")
-def todo():
-    return render_template("todo.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
